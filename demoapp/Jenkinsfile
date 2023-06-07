@@ -6,7 +6,7 @@ node {
     }
 
     stage ('Image build') {
-        sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile'
+        sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
 
     stage ('Image test') {
         sh 'echo "Tests passed"'
