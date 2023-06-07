@@ -6,15 +6,15 @@ node {
     }
 
     stage ('Image build') {
-       dockerImage = sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
+       app = sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
 
     stage ('Image test') {
         sh 'echo "Tests passed"'
     }
 
     stage ('Push image') {
-        withDockerRegistry([dockerhub: "buore", "https://hub.docker.com/u/buore", ""], 'dockerhub') {
-            dockerImage.push("${env.BUILD_NUMBER}")
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
         }
     }
 
