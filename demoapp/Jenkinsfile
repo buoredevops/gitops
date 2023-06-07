@@ -9,7 +9,7 @@ node {
     stage ('Image build') {
        sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
        app = sh 'docker images | grep buore/demoapp'
-       echo ${app}
+       echo $app
 
        
 
