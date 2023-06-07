@@ -6,7 +6,8 @@ node {
     }
 
     stage ('Image build') {
-        sh 'docker build -t buore/demoapp  .'
+        sh 'docker build -t buore/demoapp https://github.com/demoapp/buoredevops/gitops.git#main:docker'
+        # https://github.com/buoredevops/gitops.git
     }
 
     stage ('Image test') {
