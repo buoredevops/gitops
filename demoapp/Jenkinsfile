@@ -10,7 +10,7 @@ node {
     }
 
     stage ('Image build') {
-       sh 'docker images -a'
+       sh 'docker rmi $(docker images -a -q)'
        sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
        sh 'docker tag buore/demoapp:latest   buore/demoapp:${BUILD_NUMBER}'
        sh 'docker images'
