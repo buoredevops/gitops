@@ -6,7 +6,7 @@ node {
     }
 
     stage ('Image build') {
-        app = docker.build("buore/demoapp")
+        sh 'docker build -t buore/demoapp:${DOCKERTAG}'
     }
 
     stage ('Image test') {
