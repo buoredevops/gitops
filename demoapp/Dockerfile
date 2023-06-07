@@ -1,5 +1,5 @@
 FROM python:3.8-slim-buster
-WORKDIR /app
+WORKDIR /demoapp
 COPY requirements.txt   requirements.txt
 RUN pi3 install -r requirements.txt
 COPY  .  .
