@@ -6,7 +6,7 @@ node {
     }
 
     stage ('Image build') {
-        sh 'docker build -t buore/demoapp:${DOCKERTAG}   .'
+        sh 'docker build -t buore/demoapp  .'
     }
 
     stage ('Image test') {
