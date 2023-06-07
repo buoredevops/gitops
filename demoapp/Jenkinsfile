@@ -1,5 +1,4 @@
 node {
-   def app
    environment {
    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
    }
@@ -23,8 +22,9 @@ node {
 
     stage('Push image') {
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push("${env.BUILD_NUMBER}")
+        sh 'docker push buore/demoapp:${BUILD_NUMBER}'
         }
+        
     }
 
     // stage('Update manifest') {
