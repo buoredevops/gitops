@@ -9,6 +9,8 @@ node {
     stage ('Image build') {
        app = sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
 
+       echo "${app}"
+
     stage ('Image test') {
         sh 'echo "Tests passed"'
     }
@@ -16,8 +18,7 @@ node {
     stage ('Push image') {
         echo "The current build number is ${env.BUILD_NUMBER}"
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            value="${env.BUILD_NUMBER}"
-            app.push(value)
+            app.push(${env.BUILD_NUMBER})
         }
     }
 
