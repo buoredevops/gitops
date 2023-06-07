@@ -5,10 +5,12 @@ node {
         checkout scm
     }
 
-    stage ('Test image') {
-        app.inside {
-            sh 'echo "Test stage passed"'
-        }
+    stage ('Image build') {
+        app = docker.build("buore/demoapp")
+    }
+
+    stage ('Image test') {
+        sh 'echo "Tests passed"'
     }
 
     stage ('Push image') {
@@ -17,23 +19,12 @@ node {
         }
     }
 
-    stage ('Update GIT') {
-        script {
-            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD',  usernameVariable: 'GIT_USERNAME')]) {
-                    //def encodePassword = URLEncoder.encode("$GIT_PASSWORD", 'UTF-8')
-                    //git config user.email
-                    //git config user.name
+    
 
-                    sh "cat demoapp-deployment.yaml"
-                    sh "sed -i 's+buore/demoapp:${env.BUILD_NUMBER}+g' demoapp-deployment.yaml"
-                    sh "cat demoapp-deployment.yaml"
-                    sh "git add ."
-                    sh "git commit -m 'Triggered Build: ${env.BUILD_NUMBER}' "
-                    sh "git push https://${GIT_USERNAME}@github.com/${GIT_USERNAME}/buoredevops/gitops.git  HEAD:main"
-
-                }
-            }
-        }
+    stage('Update manifest') {
+        sh "cat demoapp-deployment.yaml"
+        echo "Updating manifest"
+        build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
     }
+
 }
