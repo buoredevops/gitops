@@ -13,6 +13,7 @@ node {
        sh 'docker images'
        sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
        sh 'docker tag buore/demoapp:latest   buore/demoapp:${BUILD_NUMBER}'
+       app = 'buore/demoapp:${BUILD_NUMBER}'
        sh 'docker images'
     }
 
@@ -23,9 +24,15 @@ node {
     stage('Login') {
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
     }
-    
-    stage('Push') {
-        sh 'docker push buore/demoapp:${BUILD_NUMBER}'
+
+    // stage('Push') {
+    //     sh 'docker push buore/demoapp:${BUILD_NUMBER}'
+    // }
+
+    stage('Push image') {
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+            app.push("${env.BUILD_NUMBER}")
+        }
     }
 
     // stage('Update manifest') {
