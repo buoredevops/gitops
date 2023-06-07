@@ -2,6 +2,6 @@ FROM python:3.8-slim-buster
 WORKDIR /demoapp
 COPY  .  .
 RUN  pip install --upgrade pip  \
-     && pip3 install  -r requirements.txt
+     && pip3 install  Flask==1.1.1
 
 CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
