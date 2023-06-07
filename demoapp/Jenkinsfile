@@ -8,8 +8,6 @@ node {
     stage ('Image build') {
         sh 'cd demoapp'
         sh 'docker build -t buore/demoapp   .'
-        # https://github.com/buoredevops/gitops.git
-    }
 
     stage ('Image test') {
         sh 'echo "Tests passed"'
