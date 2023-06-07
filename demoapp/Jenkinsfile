@@ -10,7 +10,7 @@ node {
     }
 
     stage ('Image build') {
-       sh 'docker build -t buore/demoapp:${env.BUILD_NUMBER}   -f demoapp/Dockerfile  .'
+       sh 'docker build -t buore/demoapp:1.${env.BUILD_NUMBER}.0   -f demoapp/Dockerfile  .'
        
     stage ('Image test') {
         sh 'echo "Tests passed"'
@@ -23,7 +23,7 @@ node {
     }
     stage('Push') {
       steps {
-        sh 'docker push buore/demoapp:${env.BUILD_NUMBER}'
+        sh 'docker push buore/demoapp:1.${env.BUILD_NUMBER}'
       }
     }
 
