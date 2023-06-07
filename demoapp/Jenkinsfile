@@ -1,7 +1,7 @@
 node {
-    def app
+   def app
    environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+   DOCKERHUB_CREDENTIALS = credentials('dockerhub')
    }
 
     stage ('Clone repository') 
@@ -10,8 +10,11 @@ node {
     }
 
     stage ('Image build') {
-       sh 'docker build -t buore/demoapp:1.${env.BUILD_NUMBER}.0   -f demoapp/Dockerfile  .'
-       
+       sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
+       sh 'docker tag buore/demoapp:latest   buore/demoapp:${BUILD_NUMBER}'
+       sh 'docker images'
+    }
+
     stage ('Image test') {
         sh 'echo "Tests passed"'
     }
@@ -21,18 +24,16 @@ node {
         sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
     }
-    stage('Push') {
-      steps {
-        sh 'docker push buore/demoapp:1.${env.BUILD_NUMBER}'
-      }
-    }
+    // stage('Push') {
+    //   steps {
+    //     sh 'docker push buore/demoapp:1.${env.BUILD_NUMBER}'
+    //   }
+    // }
 
-    stage('Update manifest') {
-        sh "cat demoapp-deployment.yaml"
-        echo "Updating manifest"
-        build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-    }
-
-}
+    // stage('Update manifest') {
+    //     sh "cat demoapp-deployment.yaml"
+    //     echo "Updating manifest"
+    //     build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+    // }
 
 }
