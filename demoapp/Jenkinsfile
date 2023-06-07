@@ -14,6 +14,7 @@ node {
     }
 
     stage ('Push image') {
+        echo "The current build number is ${env.BUILD_NUMBER}"
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             value="${env.BUILD_NUMBER}"
             app.push(value)
