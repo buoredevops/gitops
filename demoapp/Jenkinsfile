@@ -13,7 +13,7 @@ node {
     }
 
     stage ('Push image') {
-        withDockerRegistry(["${dockerhub}": "buore", "https://hub.docker.com/u/buore", ""], 'dockerhub') {
+        withDockerRegistry([dockerhub: "buore", "https://hub.docker.com/u/buore", ""], 'dockerhub') {
             dockerImage.push("${env.BUILD_NUMBER}")
         }
     }
