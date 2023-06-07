@@ -1,5 +1,6 @@
 node {
     def app
+    def value
     stage ('Clone repository') 
     {
         checkout scm
@@ -14,7 +15,8 @@ node {
 
     stage ('Push image') {
         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            app.push()
+            value="${env.BUILD_NUMBER}"
+            app.push(value)
         }
     }
 
