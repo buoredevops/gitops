@@ -1,10 +1,5 @@
 pipeline{
     agent any
-
-    environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    }
-
     stages{
 
         stage ('checkout'){
@@ -24,7 +19,7 @@ pipeline{
         stage ('deploy image to registry') {
 
             steps{ 
-                withCredentials([usernamePassword(credentials: 'dockerhub', usernameVariable: USER, passwordVariable:PASSWD)]){
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable:'PASSWD')]){
                     echo ${PASSWD} | docker login -u ${USER}. —password-stdin  
                 }
                 sh "docker push buore/demoapp:${BUILD_NUMBER}"
