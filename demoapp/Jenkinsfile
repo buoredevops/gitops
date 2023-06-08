@@ -1,37 +1,46 @@
-node {
-   environment {
-   DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-   }
+pipeline{
+    agent any
 
-    stage ('Clone repository') 
-    {
-        checkout scm
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
 
-    stage ('Image build') {
-       sh 'docker system prune -a'
-    //    sh 'docker build -t buore/demoapp   -f demoapp/Dockerfile  .'
-    //    sh 'docker tag buore/demoapp:latest   buore/demoapp:${BUILD_NUMBER}'
-    //    sh 'docker images'
+    stages{
+
+        stage ('Clone repository') 
+           {
+             checkout scm
+           }
+
+        stage ('build image') {
+
+            steps{ 
+                //sh 'docker system prune -a'
+               sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
+               sh 'docker images'
+            } 
+        }
+
+        stage ('deploy image to registry') {
+
+            steps{ 
+                withCredentials([usernamePassword(credentials: 'dockerhub', usernameVariable: USER, passwordVariable:PASSWD)]){
+                    echo ${PASSWD} | docker login -u ${USER}. —password-stdin  
+                }
+                sh "docker push buore/demoapp:${BUILD_NUMBER}"
+            } 
+        }
+
+
+
     }
 
-    // stage ('Image test') {
-    //     sh 'echo "Tests passed"'
-    // }
-
-    // stage('Push image') {
-    //     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-    //     sh 'docker push buore/demoapp:${BUILD_NUMBER}'
-    //     }
-        
-    // }
-
-
-
-    // stage('Update manifest') {
-    //     sh "cat demoapp-deployment.yaml"
-    //     echo "Updating manifest"
-    //     build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
-    // }
 
 }
+
+     // stage('Update manifest') {
+     //    sh "cat demoapp-deployment.yaml"
+     //    echo "updating manifest"
+     //    build job: 'updatemanifest', parameters: [string(name: 'DOCKERTAG', value: env.BUILD_NUMBER)]
+     //    }
+
