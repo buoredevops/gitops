@@ -6,6 +6,9 @@ RUN  pip install --upgrade pip  \
 
 COPY . .
 
+RUN echo $PWD
+RUN ls
+
 EXPOSE 5000
 
 ENV FLASK_APP=app.py
