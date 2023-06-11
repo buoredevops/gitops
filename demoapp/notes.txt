@@ -40,10 +40,12 @@ sudo mv /tmp/eksctl /usr/local/bin
 sudo yum install docker -y
 sudo usermod -aG docker $USER
 sudo newgrp docker
-sudo usermod -aG docker jenkins
+sudo usermod -aG ec2-user docker jenkins
 sudo newgrp docker
 sudo systemctl enable docker.service
 sudo systemctl start docker.service
+
+# if permissions are modified for docker later on, you may need to reboot
 
 sudo service jenkins restart
 sudo systemctl daemon-reload
@@ -51,6 +53,8 @@ sudo systemctl start docker
 sudo systemctl enable docker
 sudo systemctl status docker
 sudo yum install jq -y
+
+
 
 #installing jenkins only, check jenkins on aws for any updates
 sudo yum update –y

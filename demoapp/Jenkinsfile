@@ -15,10 +15,12 @@ pipeline{
             } 
         }
         stage ('deploy image to registry') {
+            steps{
             
                  docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                  sh "docker push buore/demoapp:${BUILD_NUMBER}"    
               }
+            }
                 
             } 
         }
