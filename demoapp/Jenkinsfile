@@ -1,8 +1,9 @@
-pipeline{
+pipeline {
+
     agent any
     environment {     
     DOCKERHUB_CREDENTIALS= credentials('dockerhub')     
-}
+    }
     stages{
         stage("git checkout"){
                 steps{
@@ -20,20 +21,18 @@ pipeline{
 
         stage('Login to Docker Hub') {      	
                 steps{                       	
-	                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
-	                echo 'Login Completed'      
+	                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		     
                 }           
         }   
 
         stage('Push Image to Docker Hub') {         
                 steps{                            
-                    sh "sudo docker push buore/demoapp:${BUILD_NUMBER}"           
-                    echo 'Push Image Completed'       
+                    sh "sudo docker push buore/demoapp:${BUILD_NUMBER}"      
                     }            
          } 
     }
 
-
+}
      // stage('Update manifest') {
      //    sh "cat demoapp-deployment.yaml"
      //    echo "updating manifest"
