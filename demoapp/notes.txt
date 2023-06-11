@@ -40,6 +40,7 @@ sudo mv /tmp/eksctl /usr/local/bin
 sudo yum install docker -y
 sudo usermod -aG docker $USER
 sudo newgrp docker
+sudo usermod -a -G docker jenkins
 sudo usermod -aG ec2-user docker jenkins
 sudo newgrp docker
 sudo systemctl enable docker.service

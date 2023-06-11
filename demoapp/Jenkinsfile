@@ -29,7 +29,13 @@ pipeline {
                 steps{                            
                     sh "docker push buore/demoapp:${BUILD_NUMBER}"      
                     }            
-         } 
+        } 
+
+        post {
+                always {
+                    sh 'docker logout'
+		        }
+	    }
     }
 
 }
