@@ -8,13 +8,13 @@ pipeline{
             }
             
         }
-        // stage ('build image') {
-        //     steps{ 
-        //         //sh 'docker system prune -a'
-        //        sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
-        //        sh 'docker images'
-        //     } 
-        // }
+        stage ('build image') {
+            steps{ 
+                //sh 'docker system prune -a'
+               sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
+               sh 'docker images'
+            } 
+        }
         // stage ('deploy image to registry') {
             
         //          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
