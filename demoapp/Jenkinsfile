@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment {     
+    DOCKERHUB_CREDENTIALS= credentials('dockerhub')     
+}
     stages{
         stage("git checkout"){
             steps{
@@ -14,8 +17,15 @@ pipeline{
                sh 'docker images'
             } 
         }
+
+        stage('Login to Docker Hub') {      	
+                steps{                       	
+	                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'                		
+	                echo 'Login Completed'      
+                }           
+        }   
         // stage('Push image') {
-        //     steps{
+        //     steps{ 
         
         // docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
         //     dockerImage.push("${BUILD_NUMBER}")
