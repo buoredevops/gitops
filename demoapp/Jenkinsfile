@@ -20,7 +20,7 @@ pipeline{
 
             steps{ 
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable:'PASSWD')]){
-                    echo "${PASSWD}" | docker login -u "${USER}". —password-stdin  
+                    echo "${PASSWD}" | docker login -u "${USER}". --password-stdin  
                 }
                 //sh "docker push buore/demoapp:${BUILD_NUMBER}"
                 app.push("${BUILD_NUMBER}")
