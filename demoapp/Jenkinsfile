@@ -15,13 +15,13 @@ pipeline{
                sh 'docker images'
             } 
         }
-        stage ('deploy image to registry') {
+        // stage ('deploy image to registry') {
             
-                 docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                 sh "docker push buore/demoapp:${BUILD_NUMBER}"    
-              }
+        //          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+        //          sh "docker push buore/demoapp:${BUILD_NUMBER}"    
+        //       }
                 
-            } 
+        //     } 
         }
 
     }
