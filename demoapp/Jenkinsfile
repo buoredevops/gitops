@@ -1,4 +1,5 @@
 pipeline{
+    def app
     agent any
     stages{
         stage("git checkout"){
@@ -10,7 +11,8 @@ pipeline{
         stage ('build image') {
             steps{ 
                 //sh 'docker system prune -a'
-               sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
+               //sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
+               app.build("buore/demoapp")
                sh 'docker images'
             } 
         }
@@ -18,9 +20,10 @@ pipeline{
 
             steps{ 
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USER', passwordVariable:'PASSWD')]){
-                    echo ${PASSWD} | docker login -u ${USER}. —password-stdin  
+                    echo "${PASSWD}" | docker login -u "${USER}". —password-stdin  
                 }
-                sh "docker push buore/demoapp:${BUILD_NUMBER}"
+                //sh "docker push buore/demoapp:${BUILD_NUMBER}"
+                app.push("${BUILD_NUMBER}")
             } 
         }
 
