@@ -29,7 +29,6 @@ pipeline{
 
     }
 
-}
 
      // stage('Update manifest') {
      //    sh "cat demoapp-deployment.yaml"
