@@ -5,3 +5,7 @@ app = Flask(__name__)
 def welcome():
     return {"message": "Welcome Home!"}
 
+
+if __name__=='main':
+    app.run(host="0.0.0.0", port=port)
+
