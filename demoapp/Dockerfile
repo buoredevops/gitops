@@ -6,4 +6,4 @@ RUN  pip install --upgrade pip  \
 
 RUN export FLASK_APP=app.py
 
-CMD ["flask", "--app", "app.y", "run"]
+CMD ["flask", "--app", "app.py", "run"]
