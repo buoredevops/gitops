@@ -1,21 +1,19 @@
 pipeline{
     agent any
     stages{
-
-        // stage ('checkout'){
-        // steps {
-        //     checkout scm
-        //    }
-        // }
+        stage("git checkout"){
+            steps{
+                git branch: 'main', url: 'https://github.com/buoredevops/gitops'
+            }
+            
+        }
         stage ('build image') {
-
             steps{ 
                 //sh 'docker system prune -a'
                sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
                sh 'docker images'
             } 
         }
-
         stage ('deploy image to registry') {
 
             steps{ 
@@ -26,10 +24,7 @@ pipeline{
             } 
         }
 
-
-
     }
-
 
 }
 
