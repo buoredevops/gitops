@@ -27,7 +27,7 @@ pipeline {
 
         stage('Push Image to Docker Hub') {         
                 steps{                            
-                    sh "sudo docker push buore/demoapp:${BUILD_NUMBER}"      
+                    sh "docker push buore/demoapp:${BUILD_NUMBER}"      
                     }            
          } 
     }
