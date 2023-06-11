@@ -5,17 +5,17 @@ pipeline{
 }
     stages{
         stage("git checkout"){
-            steps{
-                git branch: 'main', url: 'https://github.com/buoredevops/gitops.git'
-            }
+                steps{
+                    git branch: 'main', url: 'https://github.com/buoredevops/gitops.git'
+                }
             
         }
         stage ('build image') {
-            steps{ 
-                //sh 'docker system prune -a'
-               sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
-               sh 'docker images'
-            } 
+                steps{ 
+                    //sh 'docker system prune -a'
+                sh "docker build -t buore/demoapp:${BUILD_NUMBER}   -f demoapp/Dockerfile  ."
+                sh 'docker images'
+                } 
         }
 
         stage('Login to Docker Hub') {      	
@@ -26,21 +26,11 @@ pipeline{
         }   
 
         stage('Push Image to Docker Hub') {         
-         steps{                            
-               sh "sudo docker push buore/demoapp:${BUILD_NUMBER}"           
-               echo 'Push Image Completed'       
-             }            
+                steps{                            
+                    sh "sudo docker push buore/demoapp:${BUILD_NUMBER}"           
+                    echo 'Push Image Completed'       
+                    }            
          } 
-        // stage('Push image') {
-        //     steps{ 
-        
-        // docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-        //     dockerImage.push("${BUILD_NUMBER}")
-        //     }
-        //   } 
-        // }
-        }
-
     }
 
 
