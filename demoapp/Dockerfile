@@ -3,9 +3,6 @@ WORKDIR /app
 COPY  .  /app
 RUN  pip install --upgrade pip  \
      && pip3 install  Flask==2.3.1
-
-COPY . .
-
 RUN echo $PWD
 RUN ls
 
