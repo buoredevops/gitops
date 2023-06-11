@@ -14,15 +14,14 @@ pipeline{
                sh 'docker images'
             } 
         }
-        stage('Push image') {
-
-            steps{
+        // stage('Push image') {
+        //     steps{
         
-        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-            dockerImage.push("${BUILD_NUMBER}")
-            }
-          } 
-        }
+        // docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+        //     dockerImage.push("${BUILD_NUMBER}")
+        //     }
+        //   } 
+        // }
         }
 
     }
