@@ -4,6 +4,8 @@ COPY  .  /app
 RUN  pip install --upgrade pip  \
      && pip3 install  Flask==2.3.1
 
+COPY . .
+
 EXPOSE 5000
 
 ENV FLASK_APP=app.py
